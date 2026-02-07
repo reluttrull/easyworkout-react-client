@@ -1,0 +1,22 @@
+html, body, #root {
+  height: 100%;
+  margin: 0; 
+}
+
+.container {
+  display: flex;
+  min-height: 100vh; 
+  flex-direction: column; 
+}
+
+header {
+  padding-bottom: 20px;
+}
+
+main {
+  flex: 1; 
+}
+
+.horizontal-nav > a {
+  padding-right: 10px;
+}
