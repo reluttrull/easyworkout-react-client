@@ -12,7 +12,7 @@ import Reports from './reports/Reports'
 import Account from './account/Account'
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated] = useState(false);
 
   return (
     <BrowserRouter>
