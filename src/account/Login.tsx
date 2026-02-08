@@ -1,14 +1,17 @@
 import AccountService from './account.service'
 import { useAuth } from './AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 export const Login = () => {
+  const navigate = useNavigate();
   const auth = useAuth();
   
   const handleLogin = async (formData:FormData) => {
-    await AccountService.login(
+    var success = await AccountService.login(
       formData.get("userName")?.toString() ?? '', 
       formData.get("password")?.toString() ?? '',
     auth);
+    if (success) navigate('/', { replace: true });
   }
 
   return (

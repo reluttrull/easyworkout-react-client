@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setAccessToken(newAccessToken);
     setRefreshToken(newRefreshToken)
     localStorage.setItem("ewtoken", newAccessToken);
-    localStorage.setItem("ewrefresh", newRefreshToken)
+    localStorage.setItem("ewrefresh", newRefreshToken);
   };
 
   const revoke = () => {
