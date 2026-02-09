@@ -4,19 +4,23 @@ html, body, #root {
 }
 
 .container {
-  display: flex;
+  display: grid;
   min-height: 100vh; 
-  flex-direction: column; 
+  grid-template-rows: auto 1fr auto;
 }
 
 header {
   padding-bottom: 20px;
 }
 
-main {
-  flex: 1; 
-}
-
 .horizontal-nav > a {
   padding-right: 10px;
+}
+
+.vertical-spacing {
+  padding-bottom: 10px;
+}
+
+.indent {
+  padding-left: 10px;
 }

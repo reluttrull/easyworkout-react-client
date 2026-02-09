@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../account/AuthContext'
 import type { WorkoutResponse } from './interfaces'
 import WorkoutService from './workout.service'
+import Workout from './Workout';
 
 function Workouts() {
   const auth = useAuth();
@@ -17,10 +18,10 @@ function Workouts() {
 
   return (
         <>
-            <h2>Workouts</h2>
-            {workouts.map(workout => {
-              <div>{workout.name}</div>
-            })}
+            <h2>My Workouts</h2>
+            {workouts.map((workout) => (
+              <Workout key={`workout${workout.id}`} workout={workout} />
+            ))}
         </>
   )
 }

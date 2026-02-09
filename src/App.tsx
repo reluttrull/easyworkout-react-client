@@ -1,3 +1,4 @@
+import './App.css';
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider, useAuth } from './account/AuthContext'
@@ -16,7 +17,11 @@ function AppRoutes() {
   const auth = useAuth();
 
   useEffect(() => {
-    setupAxiosInterceptors(() => auth.accessToken);
+    setupAxiosInterceptors(
+      () => auth.accessToken,
+      () => auth.refreshToken,
+      (a:string, r:string) => auth.setTokens(a, r)
+    );
   }, [auth.accessToken]);
 
   return (
