@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react'
 import Exercise from './Exercise'
-import { useAuth } from '../account/AuthContext'
 import type { ExerciseResponse } from './interfaces'
 import ExerciseService from './exercise.service'
 
 function Exercises() {
-  const auth = useAuth();
   const [exercises, setExercises] = useState<ExerciseResponse[]>([]);
   useEffect(() => {
     loadExercises();
   }, []);
 
   const loadExercises = async () => {
-    let response = await ExerciseService.getAllExercises(auth);
+    let response = await ExerciseService.getAllExercises();
     setExercises(response);
   }
 
