@@ -14,6 +14,7 @@ interface AuthProviderProps {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
+  console.log('use auth context looks like ', context);
   if (context == undefined) {
     throw new Error("useAuth must be used within an AuthProvider");
   }

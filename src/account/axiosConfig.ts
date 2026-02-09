@@ -4,12 +4,17 @@ export const setupAxiosInterceptors = (getAccessToken: () => string | null) => {
   axios.interceptors.request.use(
     (config) => {
       const accessToken = getAccessToken();
+      console.log('in interceptor, we see token', accessToken);
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
       }
+      console.log('and headers look like ', config.headers);
       return config;
     },
-    (error) => Promise.reject(error)
+    (error) => {
+      console.log('but we got an error', error);
+      Promise.reject(error);
+    }
   );
 
   axios.interceptors.response.use(
