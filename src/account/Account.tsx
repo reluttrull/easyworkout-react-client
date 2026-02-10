@@ -5,6 +5,8 @@ import AccountService from './account.service'
 function Account() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [user, setUser] = useState<UserResponse|null>(null);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   useEffect(() => {
     loadUserInfo();
@@ -12,7 +14,27 @@ function Account() {
 
   const loadUserInfo = async () => {
     let response = await AccountService.loadUser();
+    if (response) updateState(response);
+  }
+
+  const handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(event.target.value);
+  }
+  
+  const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(event.target.value);
+  }
+
+  const handleUpdate = async () => {
+    let response = await AccountService.update(firstName, lastName);
+    if (response) updateState(response);
+    setIsEditMode(false);
+  }
+
+  const updateState = (response:UserResponse) => {
     setUser(response);
+    setFirstName(response.firstName);
+    setLastName(response.lastName);
   }
 
   return (
@@ -30,7 +52,14 @@ function Account() {
               </div>}
             {isEditMode && 
               <div>
-                edit account info
+                <h2>Edit account information</h2>
+                <form action={handleUpdate}>
+                  <label htmlFor="firstName">First name</label>
+                  <input type="text" title="firstName" value={firstName} onChange={handleFirstNameChange} />
+                  <label htmlFor="lastName">Last name</label>
+                  <input type="text" title="lastName" value={lastName} onChange={handleLastNameChange} />
+                  <button type="submit">Save changes</button>
+                </form>
                 <button onClick={() => setIsEditMode(false)}>Cancel</button>
               </div>}
         </>

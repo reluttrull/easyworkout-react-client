@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { AuthContextType } from './AuthContext'
-import type { UserResponse } from './interfaces';
+import type { UserResponse, UpdateUserRequest } from './interfaces';
 
 class AccountService {
   private baseUrl = `${import.meta.env.VITE_BASE_ACCOUNT_API_URL}/api/auth`;
@@ -32,6 +32,16 @@ class AccountService {
     } catch (err) {
       console.error('error', err);
       throw err;
+    }
+  }
+
+  async update(firstName:string, lastName:string) {
+    try {
+      const request:UpdateUserRequest = { firstName: firstName, lastName: lastName };
+      const res = await axios.put<UserResponse>(`${this.baseUrl}/me`, request);
+      return res.data;
+    } catch (err) {
+      console.error('error', err);
     }
   }
 }
