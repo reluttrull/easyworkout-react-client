@@ -61,7 +61,7 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
               <div>
                 <div className="indent">
                   {workout.exercises.map((exercise) => (
-                    <Exercise exercise={exercise} onExerciseChanged={handleChildChanged} />
+                    <Exercise exercise={exercise} workoutId={workout.id} onExerciseChanged={handleChildChanged} />
                   ))}
                 </div>
                 <div><button onClick={() => setIsDetailVisible(false)}>Hide detail</button></div>

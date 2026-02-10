@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import type { ExerciseResponse } from './interfaces'
+import WorkoutService from '../workouts/workout.service'
 import ExerciseService from './exercise.service'
 
 interface ExerciseProps {
     exercise:ExerciseResponse,
+    workoutId?: string|null,
     onExerciseChanged:() => void
 };
 
-function Exercise({ exercise, onExerciseChanged }: ExerciseProps) {
+function Exercise({ exercise, workoutId, onExerciseChanged }: ExerciseProps) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [name, setName] = useState(exercise.name);
   const [notes, setNotes] = useState(exercise.notes);
@@ -29,6 +31,12 @@ function Exercise({ exercise, onExerciseChanged }: ExerciseProps) {
     setIsEditMode(false);
   }
 
+  const removeExerciseFromWorkout = async () => {
+    if (!workoutId) return;
+    await WorkoutService.removeExercise(workoutId, exercise.id);
+    onExerciseChanged();
+  }
+
   const deleteExercise = async () => {
     if (confirm(`Are you sure you want to delete exercise ${exercise.name}?`)) {
       await ExerciseService.delete(exercise.id);
@@ -46,8 +54,9 @@ function Exercise({ exercise, onExerciseChanged }: ExerciseProps) {
               {new Date(exercise.lastEditedDate).toLocaleString()}</div>
             <div className="indent"><strong>Number of sets: </strong>
               {exercise.exerciseSets.length}</div>
-            <button onClick={() => setIsEditMode(true)}>Edit</button>
-            <button onClick={deleteExercise}>Delete</button>
+            <div><button onClick={() => setIsEditMode(true)}>Edit</button></div>
+            {workoutId && <div><button onClick={removeExerciseFromWorkout}>Remove from workout</button></div>}
+            <div><button onClick={deleteExercise}>Delete</button></div>
           </div>}
         {isEditMode && 
           <div>
@@ -57,7 +66,7 @@ function Exercise({ exercise, onExerciseChanged }: ExerciseProps) {
               <div><textarea className="text-area" title="notes" value={notes ?? ""} onChange={changeNotes} /></div>
               <div><button type="submit">Update</button></div>
             </form>
-            <button type="button" onClick={() => setIsEditMode(false)}>Cancel</button>
+            <div><button type="button" onClick={() => setIsEditMode(false)}>Cancel</button></div>
           </div>}
       </>
   )
