@@ -13,12 +13,16 @@ function CompletedWorkouts() {
     let response = await CompletedWorkoutService.getAllCompletedWorkouts();
     setCompletedWorkouts(response.items);
   }
+  
+  const handleChildChanged = () => {
+    loadCompletedWorkouts();
+  }
 
   return (
         <>
             <h2>My Completed Workouts</h2>
             {completedWorkouts.map((completedWorkout) => (
-              <CompletedWorkout key={`completed-workout${completedWorkout.id}`} completedWorkout={completedWorkout} />
+              <CompletedWorkout key={`completed-workout${completedWorkout.id}`} completedWorkout={completedWorkout} onChange={handleChildChanged} />
             ))}
         </>
   )

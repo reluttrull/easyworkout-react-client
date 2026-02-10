@@ -1,12 +1,29 @@
+import { useState } from 'react'
 import type { CompletedWorkoutResponse } from './interfaces'
+import CompletedWorkoutService from './completed-workout.service'
 
 interface CompletedWorkoutProps {
-    completedWorkout:CompletedWorkoutResponse;
+    completedWorkout:CompletedWorkoutResponse,
+    onChange:() => void
 };
 
-function CompletedWorkout({ completedWorkout }: CompletedWorkoutProps) {
+function CompletedWorkout({ completedWorkout, onChange }: CompletedWorkoutProps) {
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [notes, setNotes] = useState(completedWorkout.completedNotes);
+
+  const changeNotes = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNotes(event.target.value);
+  }
+
+  const handleUpdate = async () => {
+    await CompletedWorkoutService.update(completedWorkout.id, notes);
+    setIsEditMode(false);
+    onChange();
+  }
+
   return (
         <div className="vertical-spacing">
+          <div>
             <h3>Workout: {completedWorkout.originalName}</h3>
             <div className="indent"><strong>Notes: </strong>
                 {completedWorkout.completedNotes ?? completedWorkout.originalNotes}</div>
@@ -38,6 +55,17 @@ function CompletedWorkout({ completedWorkout }: CompletedWorkoutProps) {
                 </div>
               ))}
             </div>
+          </div>
+          {!isEditMode && <div><button onClick={() => setIsEditMode(true)}>Edit</button></div>}
+          {isEditMode && 
+            <div>
+              <form action={handleUpdate}>
+                <label htmlFor="notes">Notes</label>
+                <textarea className="text-area" title="notes" value={notes ?? ''} onChange={changeNotes} />
+                <button type="submit">Save changes</button>
+              </form>
+              <button onClick={() => setIsEditMode(false)}>Cancel</button>
+            </div>}
         </div>
   )
 }

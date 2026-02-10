@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { ChangeEvent } from 'react'
-import type { CreateSetRequest, ExerciseSetResponse } from './interfaces'
+import type { CreateSetRequest } from './interfaces'
 import { WeightUnit, DurationUnit, DistanceUnit } from '../model/enums'
 import ExerciseService from '../exercises/exercise.service'
 

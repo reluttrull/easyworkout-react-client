@@ -49,3 +49,7 @@ export interface CompletedExerciseSetResponse {
   goalDistance?: number | null;
   distanceUnit?: string | null;
 }
+
+export interface UpdateCompletedWorkoutRequest {
+  completedNotes?: string | null;
+}

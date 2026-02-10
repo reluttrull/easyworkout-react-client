@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { CompletedWorkoutsResponse } from './interfaces'
+import type { CompletedWorkoutsResponse, CompletedWorkoutResponse, UpdateCompletedWorkoutRequest } from './interfaces'
 
 class CompletedWorkoutService {
   private baseUrl = `${import.meta.env.VITE_BASE_APP_API_URL}/api/completed-workouts`;
@@ -11,6 +11,17 @@ class CompletedWorkoutService {
     } catch (err) {
         console.error('error', err);
         throw err;
+    }
+  }
+
+  async update(id:string, notes?:string|null) : Promise<CompletedWorkoutResponse> {
+    try {
+      const request:UpdateCompletedWorkoutRequest = { completedNotes: notes };
+      const res = await axios.put(`${this.baseUrl}/${id}`, request);
+      return res.data;
+    } catch (err) {
+      console.error('error', err);
+      throw err;
     }
   }
 }
