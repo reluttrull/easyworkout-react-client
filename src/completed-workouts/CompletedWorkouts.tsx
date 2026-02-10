@@ -16,7 +16,7 @@ function CompletedWorkouts() {
 
   return (
         <>
-            <h2>My Workouts</h2>
+            <h2>My Completed Workouts</h2>
             {completedWorkouts.map((completedWorkout) => (
               <CompletedWorkout key={`completed-workout${completedWorkout.id}`} completedWorkout={completedWorkout} />
             ))}
