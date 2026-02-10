@@ -5,6 +5,7 @@ import ExerciseService from './exercise.service'
 import CreateExercise from './CreateExercise';
 
 function Exercises() {
+  const [isLoading, setIsLoading] = useState(true);
   const [exercises, setExercises] = useState<ExerciseResponse[]>([]);
   const [isCreateVisible, setIsCreateVisible] = useState(false);
 
@@ -13,8 +14,10 @@ function Exercises() {
   }, []);
 
   const loadExercises = async () => {
+    setIsLoading(true);
     let response = await ExerciseService.getAllExercises();
     setExercises(response);
+    setIsLoading(false);
   }
   
   const handleExerciseChanged = () => {
@@ -26,7 +29,8 @@ function Exercises() {
   return (
         <>
             <h2>My Exercises</h2>
-            {exercises.map((exercise) => (
+            {isLoading && <div>Loading...</div>}
+            {!isLoading && exercises.map((exercise) => (
               <Exercise key={`exercise${exercise.id}`} exercise={exercise} onExerciseChanged={handleExerciseChanged} />
             ))}
             {isCreateVisible && 

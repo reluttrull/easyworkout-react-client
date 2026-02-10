@@ -12,6 +12,7 @@ import Exercises from './exercises/Exercises'
 import CompletedWorkouts from './completed-workouts/CompletedWorkouts'
 import Reports from './reports/Reports'
 import Account from './account/Account'
+import Register from './account/Register';
 
 function AppRoutes() {
   const auth = useAuth();
@@ -30,6 +31,7 @@ function AppRoutes() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Layout />}>

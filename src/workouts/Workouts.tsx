@@ -35,7 +35,7 @@ function Workouts() {
             ))}
             {isCreateVisible && 
               <CreateWorkout onWorkoutCreated={handleWorkoutChanged} onCancel={() => setIsCreateVisible(false)} />}
-            <button onClick={() => setIsCreateVisible(true)}>Add workout</button>
+            <button type="button" onClick={() => setIsCreateVisible(true)}>Add workout</button>
         </>
   )
 }

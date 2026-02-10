@@ -35,12 +35,12 @@ function CompletedWorkout({ completedWorkout, onChange }: CompletedWorkoutProps)
               {completedWorkout.completedExercises.length}</div>
             <div className="indent">
               {completedWorkout.completedExercises.map((exercise) => (
-                <div className="indent">
+                <div key={`completed-exercise${exercise.id}`} className="indent">
                   <h4>Exercise: {exercise.name}</h4>
                   {[...exercise.completedExerciseSets]
                     .sort((a, b) => a.setNumber - b.setNumber)
                     .map((set) => (
-                    <div className="indent">
+                    <div key={`completed-exercise-set${set.id}`} className="indent">
                       <h5>Set #{set.setNumber + 1}</h5>
                       {(set.reps || set.goalReps) &&
                         <div className="indent">{set.reps} / {set.goalReps} reps</div>}

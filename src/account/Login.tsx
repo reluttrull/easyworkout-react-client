@@ -22,6 +22,7 @@ export const Login = () => {
               <input title="userName" name="password" type="password" />
               <button type="submit">Login</button>
             </form>
+            <div>Don't have an account? <a href="register">Register</a></div>
         </>
   )
 }
