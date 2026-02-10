@@ -70,7 +70,7 @@ function Exercise({ exercise, workoutId, onExerciseChanged }: ExerciseProps) {
                 <div className="indent">
                   {exercise.exerciseSets.map((set) => (
                     <div className="indent">
-                      <ExerciseSet set={set} />
+                      <ExerciseSet set={set} exerciseId={exercise.id} onChange={handleChildChanged} />
                     </div>
                   ))}
                 </div>
