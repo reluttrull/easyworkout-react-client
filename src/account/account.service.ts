@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { AuthContextType } from './AuthContext'
+import type { UserResponse } from './interfaces';
 
 class AccountService {
   private baseUrl = `${import.meta.env.VITE_BASE_ACCOUNT_API_URL}/api/auth`;
@@ -22,7 +23,16 @@ class AccountService {
     } catch (err) {
       console.error('error', err);
     }
+  }
 
+  async loadUser() {
+    try {
+      const res = await axios.get<UserResponse>(`${this.baseUrl}/me`);
+      return res.data;
+    } catch (err) {
+      console.error('error', err);
+      throw err;
+    }
   }
 }
 
