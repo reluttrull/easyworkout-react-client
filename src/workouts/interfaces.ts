@@ -1,3 +1,5 @@
+import type { ExerciseResponse } from "../exercises/interfaces";
+
 export interface WorkoutResponse {
   id: string;
   addedByUserId: string;
@@ -6,7 +8,7 @@ export interface WorkoutResponse {
   notes?: string | null;
   lastCompletedDate?: Date | null;
   lastEditedDate: Date;
-  exercises: any[];
+  exercises: ExerciseResponse[];
 }
 
 export interface UpdateWorkoutRequest {

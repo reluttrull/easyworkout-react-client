@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import type { WorkoutResponse } from './interfaces'
 import WorkoutService from './workout.service'
+import Exercise from '../exercises/Exercise';
 
 interface WorkoutProps {
-    workout:WorkoutResponse;
+    workout:WorkoutResponse,
     onWorkoutChanged:() => void
 };
 
 function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isDetailVisible, setIsDetailVisible] = useState(false);
   const [name, setName] = useState(workout.name);
   const [notes, setNotes] = useState(workout.notes);
 
@@ -20,7 +22,7 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
    setNotes(event.target.value);
   }
 
-  const updateWorkout = async (event:any) => {
+  const updateWorkout = async () => {
     if (name == workout.name && notes == workout.notes) return;
     workout.name = name;
     workout.notes = notes;
@@ -36,6 +38,10 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
     }
   }
 
+  const handleExerciseChanged = () => {
+    onWorkoutChanged();
+  }
+
   return (
       <>
         {!isEditMode && 
@@ -48,8 +54,18 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
               {new Date(workout.lastCompletedDate).toLocaleString()}</div>}
             <div className="indent"><strong>Number of exercises: </strong>
               {workout.exercises.length}</div>
-            <button onClick={() => setIsEditMode(true)}>Edit</button>
-            <button onClick={deleteWorkout}>Delete</button>
+            {!isDetailVisible && <div><button onClick={() => setIsDetailVisible(true)}>Show detail</button></div>}
+            {isDetailVisible && 
+              <div>
+                <div className="indent">
+                  {workout.exercises.map((exercise) => (
+                    <Exercise exercise={exercise} onExerciseChanged={handleExerciseChanged} />
+                  ))}
+                </div>
+                <div><button onClick={() => setIsDetailVisible(false)}>Hide detail</button></div>
+              </div>}
+            <div><button onClick={() => setIsEditMode(true)}>Edit</button></div>
+            <div><button onClick={deleteWorkout}>Delete</button></div>
           </div>}
         {isEditMode && 
           <div>

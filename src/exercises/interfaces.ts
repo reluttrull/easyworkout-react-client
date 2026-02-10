@@ -8,3 +8,13 @@ export interface ExerciseResponse {
   lastEditedDate: Date;
   exerciseSets: any[];
 }
+
+export interface CreateExerciseRequest {
+  name: string;
+  notes?: string | null;
+}
+
+export interface UpdateExerciseRequest {
+  name: string;
+  notes?: string | null;
+}
