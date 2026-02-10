@@ -54,9 +54,11 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
               {new Date(workout.lastEditedDate).toLocaleString()}</div>
             {workout.lastCompletedDate && <div className="indent"><em>Last completed: </em>
               {new Date(workout.lastCompletedDate).toLocaleString()}</div>}
-            <div className="indent"><strong>Number of exercises: </strong>
-              {workout.exercises.length}</div>
-            {!isDetailVisible && <div><button onClick={() => setIsDetailVisible(true)}>Show detail</button></div>}
+            {!isDetailVisible && 
+              <div>
+                <div className="indent"><strong>Number of exercises: </strong>{workout.exercises.length}</div>
+                <button onClick={() => setIsDetailVisible(true)}>Show detail</button>
+              </div>}
             {isDetailVisible && 
               <div>
                 <div className="indent">

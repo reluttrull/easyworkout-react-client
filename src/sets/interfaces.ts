@@ -1,3 +1,5 @@
+import type { DistanceUnit, DurationUnit, WeightUnit } from "../model/enums";
+
 export interface ExerciseSetResponse {
   id: string;
   exerciseId: string;
@@ -10,3 +12,13 @@ export interface ExerciseSetResponse {
   distance?: number | null;
   distanceUnit?: string | null;
 } 
+
+export interface CreateSetRequest {
+  reps?: number | null;
+  weight?: number | null;
+  weightUnit?: WeightUnit | null;
+  duration?: number | null;
+  durationUnit?: DurationUnit | null;
+  distance?: number | null;
+  distanceUnit?: DistanceUnit | null;
+}

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { ExerciseResponse, UpdateExerciseRequest, CreateExerciseRequest } from './interfaces'
+import type { CreateSetRequest } from '../sets/interfaces'
 
 class ExerciseService {
   private baseUrl = `${import.meta.env.VITE_BASE_APP_API_URL}/api/exercises`;
@@ -39,6 +40,26 @@ class ExerciseService {
   async delete(id:string) {
     try {
       const res = await axios.delete(`${this.baseUrl}/${id}`);
+      return res.data;
+    } catch (err) {
+      console.error('error', err);
+      throw err;
+    }
+  }
+
+  async createSet(exerciseId:string, request:CreateSetRequest) {
+    try {
+      const res = await axios.post(`${this.baseUrl}/${exerciseId}/sets`, request);
+      return res.data;
+    } catch (err) {
+      console.error('error', err);
+      throw err;
+    }
+  }
+
+  async deleteSet(exerciseId:string, setId:string) {
+    try {
+      const res = await axios.delete(`${this.baseUrl}/${exerciseId}/sets/${setId}`);
       return res.data;
     } catch (err) {
       console.error('error', err);

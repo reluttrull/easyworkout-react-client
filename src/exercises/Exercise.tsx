@@ -3,6 +3,7 @@ import type { ExerciseResponse } from './interfaces'
 import WorkoutService from '../workouts/workout.service'
 import ExerciseService from './exercise.service'
 import ExerciseSet from '../sets/ExerciseSet'
+import CreateSet from '../sets/CreateSet'
 
 interface ExerciseProps {
     exercise:ExerciseResponse,
@@ -13,6 +14,7 @@ interface ExerciseProps {
 function Exercise({ exercise, workoutId, onExerciseChanged }: ExerciseProps) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDetailVisible, setIsDetailVisible] = useState(false);
+  const [isCreateSetVisible, setIsCreateSetVisible] = useState(false);
   const [name, setName] = useState(exercise.name);
   const [notes, setNotes] = useState(exercise.notes);
 
@@ -22,6 +24,10 @@ function Exercise({ exercise, workoutId, onExerciseChanged }: ExerciseProps) {
 
   const changeNotes = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNotes(event.target.value);
+  }
+  
+  const handleChildChanged = () => {
+    onExerciseChanged();
   }
 
   const updateExercise = async () => {
@@ -54,16 +60,25 @@ function Exercise({ exercise, workoutId, onExerciseChanged }: ExerciseProps) {
             <div className="indent"><strong>Notes: </strong>{exercise.notes}</div>
             <div className="indent"><em>Last edited: </em>
               {new Date(exercise.lastEditedDate).toLocaleString()}</div>
-            <div className="indent"><strong>Number of sets: </strong>
-              {exercise.exerciseSets.length}</div>
-            {!isDetailVisible && <div><button onClick={() => setIsDetailVisible(true)}>Show detail</button></div>}
+            {!isDetailVisible && 
+              <div>
+                <div className="indent"><strong>Number of sets: </strong>{exercise.exerciseSets.length}</div>
+                <button onClick={() => setIsDetailVisible(true)}>Show detail</button>
+              </div>}
             {isDetailVisible && 
-              <div className="indent">
-                {exercise.exerciseSets.map((set) => (
-                  <div className="indent">
-                    <ExerciseSet set={set} />
-                  </div>
-                ))}
+              <div>
+                <div className="indent">
+                  {exercise.exerciseSets.map((set) => (
+                    <div className="indent">
+                      <ExerciseSet set={set} />
+                    </div>
+                  ))}
+                </div>
+                <div><button onClick={() => setIsDetailVisible(false)}>Hide detail</button></div>
+                {isCreateSetVisible && 
+                  <CreateSet exerciseId={exercise.id} onCreate={handleChildChanged} onReturn={() => setIsCreateSetVisible(false)} />}
+                {!isCreateSetVisible &&
+                  <div><button onClick={() => setIsCreateSetVisible(true)}>Add set</button></div>}
               </div>}
             <div><button onClick={() => setIsEditMode(true)}>Edit</button></div>
             {workoutId && <div><button onClick={removeExerciseFromWorkout}>Remove from workout</button></div>}
