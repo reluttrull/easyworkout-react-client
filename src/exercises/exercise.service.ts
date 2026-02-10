@@ -28,7 +28,7 @@ class ExerciseService {
   async create(name:string, notes:string|null) {
     const request: CreateExerciseRequest = { name: name, notes: notes };
     try {
-      const res = await axios.post(this.baseUrl, request);
+      const res = await axios.post<{id:string}>(this.baseUrl, request);
       return res.data;
     } catch (err) {
       console.error('error', err);

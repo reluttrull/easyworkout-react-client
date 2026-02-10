@@ -45,6 +45,26 @@ class WorkoutService {
       throw err;
     }
   }
+  
+  async addExercise(workoutId:string, exerciseId:string) {
+    try {
+      const res = await axios.post(`${this.baseUrl}/${workoutId}/exercises/${exerciseId}`, {});
+      return res.data;
+    } catch (err) {
+      console.error('error', err);
+      throw err;
+    }
+  }
+  
+  async removeExercise(workoutId:string, exerciseId:string) {
+    try {
+      const res = await axios.delete(`${this.baseUrl}/${workoutId}/exercises/${exerciseId}`, {});
+      return res.data;
+    } catch (err) {
+      console.error('error', err);
+      throw err;
+    }
+  }
 }
 
 export default new WorkoutService()

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import ExerciseService from './exercise.service'
 
 interface CreateExerciseProps {
-    onExerciseCreated:() => void,
+    onExerciseCreated:(id:string) => void,
     onCancel:() => void
 };
 
@@ -19,8 +19,8 @@ function CreateExercise({ onExerciseCreated, onCancel }:CreateExerciseProps) {
   }
 
   const handleSubmit = async () => {
-    await ExerciseService.create(name, notes);
-    onExerciseCreated();
+    const res = await ExerciseService.create(name, notes);
+    onExerciseCreated(res.id);
   }
 
   return (

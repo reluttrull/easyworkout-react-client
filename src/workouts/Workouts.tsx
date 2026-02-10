@@ -5,6 +5,7 @@ import Workout from './Workout';
 import CreateWorkout from './CreateWorkout';
 
 function Workouts() {
+  const [isLoading, setIsLoading] = useState(true);
   const [workouts, setWorkouts] = useState<WorkoutResponse[]>([]);
   const [isCreateVisible, setIsCreateVisible] = useState(false);
 
@@ -13,8 +14,10 @@ function Workouts() {
   }, []);
 
   const loadWorkouts = async () => {
+    setIsLoading(true);
     let response = await WorkoutService.getAllWorkouts();
     setWorkouts(response);
+    setIsLoading(false);
   }
 
   const handleWorkoutChanged = () => {
@@ -26,7 +29,8 @@ function Workouts() {
   return (
         <>
             <h2>My Workouts</h2>
-            {workouts.map((workout) => (
+            {isLoading && <div>Loading...</div>}
+            {!isLoading && workouts.map((workout) => (
               <Workout key={`workout${workout.id}`} workout={workout} onWorkoutChanged={handleWorkoutChanged} />
             ))}
             {isCreateVisible && 

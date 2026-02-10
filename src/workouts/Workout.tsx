@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { WorkoutResponse } from './interfaces'
 import WorkoutService from './workout.service'
 import Exercise from '../exercises/Exercise';
+import AddExerciseToWorkout from '../exercises/AddExerciseToWorkout';
 
 interface WorkoutProps {
     workout:WorkoutResponse,
@@ -10,6 +11,7 @@ interface WorkoutProps {
 
 function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isAddExerciseMode, setIsAddExerciseMode] = useState(false);
   const [isDetailVisible, setIsDetailVisible] = useState(false);
   const [name, setName] = useState(workout.name);
   const [notes, setNotes] = useState(workout.notes);
@@ -38,7 +40,7 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
     }
   }
 
-  const handleExerciseChanged = () => {
+  const handleChildChanged = () => {
     onWorkoutChanged();
   }
 
@@ -59,7 +61,7 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
               <div>
                 <div className="indent">
                   {workout.exercises.map((exercise) => (
-                    <Exercise exercise={exercise} onExerciseChanged={handleExerciseChanged} />
+                    <Exercise exercise={exercise} onExerciseChanged={handleChildChanged} />
                   ))}
                 </div>
                 <div><button onClick={() => setIsDetailVisible(false)}>Hide detail</button></div>
@@ -76,6 +78,11 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
               <div><button type="submit">Update</button></div>
             </form>
             <button type="button" onClick={() => setIsEditMode(false)}>Cancel</button>
+          </div>}
+        {!isAddExerciseMode && <div><button onClick={() => setIsAddExerciseMode(true)}>Add exercise</button></div>}
+        {isAddExerciseMode && 
+          <div className="indent">
+            <AddExerciseToWorkout workoutId={workout.id} onUpdate={handleChildChanged} onClose={() => setIsAddExerciseMode(false)} />
           </div>}
       </>
   )
