@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react'
 import type { WorkoutResponse } from './interfaces'
 import WorkoutService from './workout.service'
 import Workout from './Workout';
+import CreateWorkout from './CreateWorkout';
 
 function Workouts() {
   const [workouts, setWorkouts] = useState<WorkoutResponse[]>([]);
+  const [isCreateVisible, setIsCreateVisible] = useState(false);
+
   useEffect(() => {
     loadWorkouts();
   }, []);
@@ -16,6 +19,7 @@ function Workouts() {
 
   const handleWorkoutChanged = () => {
     console.log('reloading workouts collection');
+    setIsCreateVisible(false);
     loadWorkouts();
   }
 
@@ -25,6 +29,9 @@ function Workouts() {
             {workouts.map((workout) => (
               <Workout key={`workout${workout.id}`} workout={workout} onWorkoutChanged={handleWorkoutChanged} />
             ))}
+            {isCreateVisible && 
+              <CreateWorkout onWorkoutCreated={handleWorkoutChanged} onCancel={() => setIsCreateVisible(false)} />}
+            <button onClick={() => setIsCreateVisible(true)}>Add workout</button>
         </>
   )
 }

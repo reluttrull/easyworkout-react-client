@@ -13,3 +13,8 @@ export interface UpdateWorkoutRequest {
   name: string;
   notes?: string | null;
 }
+
+export interface CreateWorkoutRequest {
+  name: string;
+  notes?: string | null;
+}

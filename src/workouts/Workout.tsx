@@ -29,6 +29,13 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
     setIsEditMode(false);
   }
 
+  const deleteWorkout = async () => {
+    if (confirm(`Are you sure you want to delete workout ${workout.name}?`)) {
+      await WorkoutService.delete(workout.id);
+      onWorkoutChanged();
+    }
+  }
+
   return (
       <>
         {!isEditMode && 
@@ -42,6 +49,7 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
             <div className="indent"><strong>Number of exercises: </strong>
               {workout.exercises.length}</div>
             <button onClick={() => setIsEditMode(true)}>Edit</button>
+            <button onClick={deleteWorkout}>Delete</button>
           </div>}
         {isEditMode && 
           <div>
