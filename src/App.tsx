@@ -2,7 +2,7 @@ import './App.css';
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider, useAuth } from './account/AuthContext'
-import { setupAxiosInterceptors } from './account/axiosConfig'
+import { setupAxiosInterceptors } from './api/axiosConfig'
 import Layout from './layout/Layout'
 import PrivateRoute from './PrivateRoute'
 import Home from './home/Home'

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { ExerciseResponse } from './interfaces'
 import WorkoutService from '../workouts/workout.service'
 import ExerciseService from './exercise.service'
+import ExerciseSet from '../sets/ExerciseSet'
 
 interface ExerciseProps {
     exercise:ExerciseResponse,
@@ -11,6 +12,7 @@ interface ExerciseProps {
 
 function Exercise({ exercise, workoutId, onExerciseChanged }: ExerciseProps) {
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isDetailVisible, setIsDetailVisible] = useState(false);
   const [name, setName] = useState(exercise.name);
   const [notes, setNotes] = useState(exercise.notes);
 
@@ -54,6 +56,15 @@ function Exercise({ exercise, workoutId, onExerciseChanged }: ExerciseProps) {
               {new Date(exercise.lastEditedDate).toLocaleString()}</div>
             <div className="indent"><strong>Number of sets: </strong>
               {exercise.exerciseSets.length}</div>
+            {!isDetailVisible && <div><button onClick={() => setIsDetailVisible(true)}>Show detail</button></div>}
+            {isDetailVisible && 
+              <div className="indent">
+                {exercise.exerciseSets.map((set) => (
+                  <div className="indent">
+                    <ExerciseSet set={set} />
+                  </div>
+                ))}
+              </div>}
             <div><button onClick={() => setIsEditMode(true)}>Edit</button></div>
             {workoutId && <div><button onClick={removeExerciseFromWorkout}>Remove from workout</button></div>}
             <div><button onClick={deleteExercise}>Delete</button></div>
