@@ -25,7 +25,7 @@ export const setupAxiosInterceptors = (
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
-      if (error.response?.status == 401 && !originalRequest._retry) {
+      if (error.response?.status == 401 && !originalRequest._retry && !originalRequest.url.includes('/api/auth/refresh')) {
         originalRequest._retry = true;
         const refreshToken = getRefreshToken();
         if (!refreshToken) {

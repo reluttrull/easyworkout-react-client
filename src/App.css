@@ -24,3 +24,8 @@ header {
 .indent {
   padding-left: 10px;
 }
+
+.text-area {
+    min-width: 300px;
+    min-height: 200px;
+}

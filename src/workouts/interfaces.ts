@@ -8,3 +8,8 @@ export interface WorkoutResponse {
   lastEditedDate: Date;
   exercises: any[];
 }
+
+export interface UpdateWorkoutRequest {
+  name: string;
+  notes?: string | null;
+}

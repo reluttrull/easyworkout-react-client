@@ -14,11 +14,16 @@ function Workouts() {
     setWorkouts(response);
   }
 
+  const handleWorkoutChanged = () => {
+    console.log('reloading workouts collection');
+    loadWorkouts();
+  }
+
   return (
         <>
             <h2>My Workouts</h2>
             {workouts.map((workout) => (
-              <Workout key={`workout${workout.id}`} workout={workout} />
+              <Workout key={`workout${workout.id}`} workout={workout} onWorkoutChanged={handleWorkoutChanged} />
             ))}
         </>
   )
