@@ -37,10 +37,7 @@ export const Register = () => {
     }
     try {
       let response = await AccountService.register(formData);
-      if (response.data) {
-        // success, let's navigate away
-        navigate('login', { replace: true });
-      }
+      navigate('/login', { replace: true });
     } catch (err:any) {
       // failure, display any validation errors
         console.log(err.response.data);
