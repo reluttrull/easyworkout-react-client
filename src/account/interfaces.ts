@@ -12,3 +12,11 @@ export interface UpdateUserRequest {
   firstName: string;
   lastName: string;
 }
+
+export interface RegistrationRequest {
+  userName: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}

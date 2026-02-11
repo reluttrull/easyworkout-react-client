@@ -26,6 +26,10 @@ header {
 }
 
 .text-area {
-    min-width: 300px;
-    min-height: 200px;
+  min-width: 300px;
+  min-height: 200px;
+}
+
+.error {
+  color: red;
 }

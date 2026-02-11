@@ -1,9 +1,13 @@
 import axios from 'axios';
 import type { AuthContextType } from './AuthContext'
-import type { UserResponse, UpdateUserRequest } from './interfaces';
+import type { UserResponse, UpdateUserRequest, RegistrationRequest } from './interfaces';
 
 class AccountService {
   private baseUrl = `${import.meta.env.VITE_BASE_ACCOUNT_API_URL}/api/auth`;
+
+  async register(request:RegistrationRequest) {
+      return await axios.post(`${this.baseUrl}/register`, request);
+  }
 
   async login(userName:string, password:string, authContext: AuthContextType) {
     try {
