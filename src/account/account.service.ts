@@ -10,14 +10,7 @@ class AccountService {
   }
 
   async login(userName:string, password:string, authContext: AuthContextType) {
-    try {
-        const res = await axios.post(`${this.baseUrl}/login`, { userName, password });
-        authContext.setTokens(res.data.accessToken, res.data.refreshToken);
-        return true;
-    } catch (err) {
-        console.error('error', err);
-        return false;
-    }
+      return await axios.post(`${this.baseUrl}/login`, { userName, password });
   }
 
   async logout(authContext: AuthContextType) {
