@@ -100,13 +100,13 @@ function DoWorkout() {
                                             <input type="number" placeholder="Reps" title="reps" value={set.reps ?? ''} onChange={(e) => updateSetValue(eIndex, sIndex, e)} />
                                              / { set.goalReps }</span>}
                                         {set.goalWeight && <span> <strong>Weight: </strong>
-                                            <input type="number" placeholder="Weight" title="weight" value={set.weight ?? ''} onChange={(e) => updateSetValue(eIndex, sIndex, e)} />
+                                            <input type="number" placeholder="Weight" title="weight" step="any" value={set.weight ?? ''} onChange={(e) => updateSetValue(eIndex, sIndex, e)} />
                                             { set.goalWeight } { set.weightUnit }</span>}
                                         {set.goalDuration && <span> <strong>Duration: </strong>
-                                            <input type="number" placeholder="Duration" title="duration" value={set.duration ?? ''} onChange={(e) => updateSetValue(eIndex, sIndex, e)} />
+                                            <input type="number" placeholder="Duration" title="duration" step="any" value={set.duration ?? ''} onChange={(e) => updateSetValue(eIndex, sIndex, e)} />
                                             { set.goalDuration } { set.durationUnit }</span>}
                                         {set.goalDistance && <span> <strong>Distance: </strong>
-                                            <input type="number" placeholder="Distance" title="distance" value={set.distance ?? ''} onChange={(e) => updateSetValue(eIndex, sIndex, e)} />
+                                            <input type="number" placeholder="Distance" title="distance" step="any" value={set.distance ?? ''} onChange={(e) => updateSetValue(eIndex, sIndex, e)} />
                                             { set.goalDistance } { set.distanceUnit }</span>}
                                     </div>
                                 ))}

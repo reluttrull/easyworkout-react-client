@@ -47,8 +47,8 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
   return (
       <>
         {!isEditMode && 
-          <div className="vertical-spacing">
-            <h3>Workout: {workout.name}</h3>
+          <div className="vertical-spacing box">
+            <div className="two-column-flex-container"><h3>Workout: {workout.name}</h3><a href={`/do-workout/${workout.id}`}>Do workout!</a></div>
             <div className="indent"><strong>Notes: </strong>{workout.notes}</div>
             <div className="indent"><em>Last edited: </em>
               {new Date(workout.lastEditedDate).toLocaleString()}</div>
@@ -68,7 +68,6 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
                 </div>
                 <div><button onClick={() => setIsDetailVisible(false)}>Hide detail</button></div>
               </div>}
-            <div><a href={`/do-workout/${workout.id}`}>Do workout?</a></div>
             <div><button onClick={() => setIsEditMode(true)}>Edit</button></div>
             <div><button onClick={deleteWorkout}>Delete</button></div>
           </div>}

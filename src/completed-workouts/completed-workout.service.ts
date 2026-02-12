@@ -44,6 +44,16 @@ class CompletedWorkoutService {
       throw err;
     }
   }
+
+  async getLastCompletedDate() {
+    try {
+      const res = await axios.get(`${this.baseUrl}/me/latest`);
+      return res.data;
+    } catch (err) {
+      console.error('error', err);
+      throw err;
+    }
+  }
 }
 
 export default new CompletedWorkoutService()

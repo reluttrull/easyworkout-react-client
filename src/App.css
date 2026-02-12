@@ -10,6 +10,7 @@ html, body, #root {
   display: grid;
   min-height: 100vh; 
   grid-template-rows: auto 1fr auto;
+  max-width: 760px;
 }
 
 header {
@@ -38,6 +39,34 @@ h1, h2, h3, h4, h5 {
 .text-area {
   min-width: 300px;
   min-height: 200px;
+}
+
+.two-column-flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+button {
+  margin: 5px 0 5px 0;
+}
+
+.box {
+    border: 1px solid #999;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.exercise {
+    border: 1px solid #666;
+}
+
+.set {
+    border: 1px solid #333;
 }
 
 .error {

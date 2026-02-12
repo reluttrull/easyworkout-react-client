@@ -55,7 +55,7 @@ function Exercise({ exercise, workoutId, onExerciseChanged }: ExerciseProps) {
   return (
       <>
         {!isEditMode &&
-          <div className="vertical-spacing">
+          <div className="vertical-spacing box exercise">
             <h4>Exercise: {exercise.name}</h4>
             <div className="indent"><strong>Notes: </strong>{exercise.notes}</div>
             <div className="indent"><em>Last edited: </em>

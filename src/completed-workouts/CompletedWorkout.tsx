@@ -27,7 +27,7 @@ function CompletedWorkout({ completedWorkout, onChange }: CompletedWorkoutProps)
   }
 
   return (
-        <div className="vertical-spacing">
+        <div className="vertical-spacing box">
           <div>
             <h3>Workout: {completedWorkout.originalName}</h3>
             <div className="indent"><strong>Notes: </strong>
@@ -40,12 +40,12 @@ function CompletedWorkout({ completedWorkout, onChange }: CompletedWorkoutProps)
               {completedWorkout.completedExercises.length}</div>
             <div className="indent">
               {completedWorkout.completedExercises.map((exercise) => (
-                <div key={`completed-exercise${exercise.id}`} className="indent">
+                <div key={`completed-exercise${exercise.id}`} className="indent box exercise">
                   <h4>Exercise: {exercise.name}</h4>
                   {[...exercise.completedExerciseSets]
                     .sort((a, b) => a.setNumber - b.setNumber)
                     .map((set) => (
-                    <div key={`completed-exercise-set${set.id}`} className="indent">
+                    <div key={`completed-exercise-set${set.id}`} className="indent box set">
                       <h5>Set #{set.setNumber + 1}</h5>
                       {(set.reps || set.goalReps) &&
                         <div className="indent">{set.reps} / {set.goalReps} reps</div>}
@@ -65,9 +65,9 @@ function CompletedWorkout({ completedWorkout, onChange }: CompletedWorkoutProps)
           {isEditMode && 
             <div>
               <form action={handleUpdate}>
-                <label htmlFor="notes">Notes</label>
-                <textarea className="text-area" title="notes" value={notes ?? ''} onChange={changeNotes} />
-                <button type="submit">Save changes</button>
+                <div><label htmlFor="notes">Notes</label></div>
+                <div><textarea className="text-area" title="notes" value={notes ?? ''} onChange={changeNotes} /></div>
+                <div><button type="submit">Save changes</button></div>
               </form>
               <button onClick={() => setIsEditMode(false)}>Cancel</button>
             </div>}

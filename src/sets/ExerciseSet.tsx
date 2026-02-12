@@ -17,7 +17,7 @@ function ExerciseSet({ set, exerciseId, onChange }: ExerciseSetProps) {
 
   return (
     <>
-      <div>    
+      <div className="box set">    
         <span><strong>Set #: </strong>{ set.setNumber + 1 }</span>
         {set.reps && <span>- <strong>Reps: </strong>{ set.reps }</span>}
         {set.weight && <span>- <strong>Weight: </strong>({ set.weightUnit }) { set.weight }</span>}
