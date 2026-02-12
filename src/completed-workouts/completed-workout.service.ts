@@ -25,6 +25,16 @@ class CompletedWorkoutService {
     }
   }
 
+  async delete(id:string) {
+    try {
+      const res = await axios.delete(`${this.baseUrl}/${id}`);
+      return res.data;
+    } catch (err) {
+      console.error('error', err);
+      throw err;
+    }
+  }
+
   async finishWorkout(request:FinishWorkoutRequest) {
     try {
       const res = await axios.post(`${this.baseUrl}`, request);

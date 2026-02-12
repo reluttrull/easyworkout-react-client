@@ -21,6 +21,11 @@ function CompletedWorkout({ completedWorkout, onChange }: CompletedWorkoutProps)
     onChange();
   }
 
+  const handleDelete = async () => {
+    await CompletedWorkoutService.delete(completedWorkout.id);
+    onChange();
+  }
+
   return (
         <div className="vertical-spacing">
           <div>
@@ -66,6 +71,7 @@ function CompletedWorkout({ completedWorkout, onChange }: CompletedWorkoutProps)
               </form>
               <button onClick={() => setIsEditMode(false)}>Cancel</button>
             </div>}
+          <div><button onClick={handleDelete}>Delete</button></div>
         </div>
   )
 }
