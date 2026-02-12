@@ -13,6 +13,7 @@ import CompletedWorkouts from './completed-workouts/CompletedWorkouts'
 import Reports from './reports/Reports'
 import Account from './account/Account'
 import Register from './account/Register';
+import DoWorkout from './completed-workouts/DoWorkout';
 
 function AppRoutes() {
   const auth = useAuth();
@@ -37,6 +38,7 @@ function AppRoutes() {
           <Route path="/" element={<Layout />}>
             <Route path="workouts" element={<Workouts />} />
             <Route path="exercises" element={<Exercises />} />
+            <Route path="do-workout/:id" element={<DoWorkout />} />
             <Route path="completed-workouts" element={<CompletedWorkouts />} />
             <Route path="reports" element={<Reports />} />
             <Route path="account" element={<Account />} />

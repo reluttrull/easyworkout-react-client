@@ -14,6 +14,16 @@ class WorkoutService {
     }
   }
 
+  async get(id:string) {
+    try {
+      const res = await axios.get(`${this.baseUrl}/${id}`);
+      return res.data;
+    } catch (err) {
+      console.error('error', err);
+      throw err;
+    }
+  }
+
   async update(workout:WorkoutResponse): Promise<WorkoutResponse> {
     const request: UpdateWorkoutRequest = { name: workout.name, notes: workout.notes };
     try {

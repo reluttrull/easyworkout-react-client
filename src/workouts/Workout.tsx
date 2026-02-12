@@ -68,6 +68,7 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
                 </div>
                 <div><button onClick={() => setIsDetailVisible(false)}>Hide detail</button></div>
               </div>}
+            <div><a href={`/do-workout/${workout.id}`}>Do workout?</a></div>
             <div><button onClick={() => setIsEditMode(true)}>Edit</button></div>
             <div><button onClick={deleteWorkout}>Delete</button></div>
           </div>}

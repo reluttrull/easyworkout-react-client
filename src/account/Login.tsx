@@ -15,8 +15,7 @@ export const Login = () => {
     try {
       var response = await AccountService.login(
         formData.get("userName")?.toString() ?? '', 
-        formData.get("password")?.toString() ?? '',
-      auth);
+        formData.get("password")?.toString() ?? '');
       auth.setTokens(response.data.accessToken, response.data.refreshToken);
       // success, navigate to homepage
       navigate('/', { replace: true });
@@ -40,6 +39,7 @@ export const Login = () => {
               <input title="userName" name="password" type="password" />
               <button type="submit">Login</button>
             </form>
+            {isWaiting && <div>Loading...</div>}
             {validationErrors.map((error) => (
               <div className="error">{error}</div>
             ))}

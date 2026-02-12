@@ -9,7 +9,7 @@ class AccountService {
       return await axios.post(`${this.baseUrl}/register`, request);
   }
 
-  async login(userName:string, password:string, authContext: AuthContextType) {
+  async login(userName:string, password:string) {
       return await axios.post(`${this.baseUrl}/login`, { userName, password });
   }
 
