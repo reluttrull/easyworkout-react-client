@@ -36,21 +36,20 @@ export const Register = () => {
       return;
     }
     try {
-      let response = await AccountService.register(formData);
+      await AccountService.register(formData);
+      // success, navigate to login
       navigate('/login', { replace: true });
     } catch (err:any) {
       // failure, display any validation errors
         console.log(err.response.data);
         if (err.response.data.status == 400 && err.response.data.errors) {
           const errors = err.response.data.errors;
-
           const formattedErrors = Object.keys(errors).flatMap(key =>
             errors[key].map((message: string) => `${key}: ${message}`)
           );
-
           setValidationErrors(formattedErrors);
-        } else if (err.response.data.error) {
-          setValidationErrors(errs => [...errs, err.response.data.error]);
+        } else if (err.response.data.errors) {
+          setValidationErrors(errs => [...errs, ...err.response.data.errors]);
         } else {
           setValidationErrors(errs => [...errs, 'An unexpected error occurred.']);
         };
