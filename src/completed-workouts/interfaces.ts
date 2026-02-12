@@ -53,3 +53,35 @@ export interface CompletedExerciseSetResponse {
 export interface UpdateCompletedWorkoutRequest {
   completedNotes?: string | null;
 }
+
+export interface FinishWorkoutRequest {
+  workoutId: string;
+  completedDate: Date;
+  completedNotes?: string | null;
+  completedExercises: FinishExerciseRequest[];
+}
+
+export interface FinishExerciseRequest {
+  exerciseId: string;
+  fallbackName: string | null;
+  completedDate: Date;
+  exerciseNumber: number;
+  completedExerciseSets: FinishExerciseSetRequest[];
+}
+
+export interface FinishExerciseSetRequest {
+  exerciseSetId: string;
+  completedDate: string;
+  setNumber: number;
+  reps?: number | null;
+  goalReps?: number | null;
+  weight?: number | null;
+  goalWeight?: number | null;
+  weightUnit?: string | null;
+  duration?: number | null;
+  goalDuration?: number | null;
+  durationUnit?: string | null;
+  distance?: number | null;
+  goalDistance?: number | null;
+  distanceUnit?: string | null;
+}
