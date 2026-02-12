@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ChangeEvent } from 'react'
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import type { WorkoutResponse } from '../workouts/interfaces'
 import WorkoutService from '../workouts/workout.service'
-import Exercise from '../exercises/Exercise';
+import CompletedWorkoutService from './completed-workout.service'
 import type { FinishWorkoutRequest } from './interfaces';
 import type { ExerciseResponse } from '../exercises/interfaces';
 
@@ -10,6 +11,7 @@ function DoWorkout() {
   const { id } = useParams() as { id: string };
   const [originalWorkout, setOriginalWorkout] = useState<WorkoutResponse|null>();
   const [formData, setFormData] = useState<FinishWorkoutRequest|null>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadOriginalWorkout();
@@ -49,12 +51,30 @@ function DoWorkout() {
     setFormData(request);
   }
 
-  const updateSetValue = () => {
+  const updateSetValue = (eIndex:number, sIndex:number, e:ChangeEvent<HTMLInputElement>) => {
+    if (!formData) return;
 
+    const updated = { ...formData };
+    updated.completedExercises = [...updated.completedExercises];
+    updated.completedExercises[eIndex] = {
+        ...updated.completedExercises[eIndex],
+        completedExerciseSets: [
+        ...updated.completedExercises[eIndex].completedExerciseSets
+        ]
+    };
+    updated.completedExercises[eIndex].completedExerciseSets[sIndex] = {
+        ...updated.completedExercises[eIndex].completedExerciseSets[sIndex],
+        [e.target.title]: e.target.value
+    };
+
+    setFormData(updated);
   }
 
-  const handleSubmit = () => {
-
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData) return;
+    await CompletedWorkoutService.finishWorkout(formData);
+    navigate('/completed-workouts', { replace: true });
   }
 
   return (
@@ -76,10 +96,18 @@ function DoWorkout() {
                                 {exercise.completedExerciseSets.map((set, sIndex) => (
                                     <div key={`set${sIndex}`} className="indent">
                                         <span><strong>Set #: </strong>{ set.setNumber + 1 }</span>
-                                        {set.goalReps && <span>- <strong>Reps: </strong>{ set.goalReps }</span>}
-                                        {set.goalWeight && <span>- <strong>Weight: </strong>({ set.weightUnit }) { set.goalWeight }</span>}
-                                        {set.goalDuration && <span>- <strong>Duration: </strong>({ set.durationUnit }) { set.goalDuration }</span>}
-                                        {set.goalDistance && <span>- <strong>Distance: </strong>({ set.distanceUnit }) { set.goalDistance }</span>}
+                                        {set.goalReps && <span> <strong>Reps: </strong>
+                                            <input type="number" placeholder="Reps" title="reps" value={set.reps ?? ''} onChange={(e) => updateSetValue(eIndex, sIndex, e)} />
+                                             / { set.goalReps }</span>}
+                                        {set.goalWeight && <span> <strong>Weight: </strong>
+                                            <input type="number" placeholder="Weight" title="weight" value={set.weight ?? ''} onChange={(e) => updateSetValue(eIndex, sIndex, e)} />
+                                            { set.goalWeight } { set.weightUnit }</span>}
+                                        {set.goalDuration && <span> <strong>Duration: </strong>
+                                            <input type="number" placeholder="Duration" title="duration" value={set.duration ?? ''} onChange={(e) => updateSetValue(eIndex, sIndex, e)} />
+                                            { set.goalDuration } { set.durationUnit }</span>}
+                                        {set.goalDistance && <span> <strong>Distance: </strong>
+                                            <input type="number" placeholder="Distance" title="distance" value={set.distance ?? ''} onChange={(e) => updateSetValue(eIndex, sIndex, e)} />
+                                            { set.goalDistance } { set.distanceUnit }</span>}
                                     </div>
                                 ))}
                                 </div>

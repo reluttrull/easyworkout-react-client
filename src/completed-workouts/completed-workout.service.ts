@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { CompletedWorkoutsResponse, CompletedWorkoutResponse, UpdateCompletedWorkoutRequest } from './interfaces'
+import type { CompletedWorkoutsResponse, CompletedWorkoutResponse, UpdateCompletedWorkoutRequest, FinishWorkoutRequest } from './interfaces'
 
 class CompletedWorkoutService {
   private baseUrl = `${import.meta.env.VITE_BASE_APP_API_URL}/api/completed-workouts`;
@@ -21,6 +21,16 @@ class CompletedWorkoutService {
       return res.data;
     } catch (err) {
       console.error('error', err);
+      throw err;
+    }
+  }
+
+  async finishWorkout(request:FinishWorkoutRequest) {
+    try {
+      const res = await axios.post(`${this.baseUrl}`, request);
+      return res.data;
+    } catch (err) {
+      console.error('error in finishWorkout', err);
       throw err;
     }
   }
