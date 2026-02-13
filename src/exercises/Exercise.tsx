@@ -15,6 +15,7 @@ function Exercise({ exercise, workoutId, onExerciseChanged }: ExerciseProps) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDetailVisible, setIsDetailVisible] = useState(false);
   const [isCreateSetVisible, setIsCreateSetVisible] = useState(false);
+  const [thisExercise, setThisExercise] = useState(exercise);
   const [name, setName] = useState(exercise.name);
   const [notes, setNotes] = useState(exercise.notes);
 
@@ -27,56 +28,68 @@ function Exercise({ exercise, workoutId, onExerciseChanged }: ExerciseProps) {
   }
   
   const handleChildChanged = () => {
-    onExerciseChanged();
+    reloadExercise();
+    setIsCreateSetVisible(false);
   }
 
   const updateExercise = async () => {
-    if (name == exercise.name && notes == exercise.notes) return;
-    exercise.name = name;
-    exercise.notes = notes;
-    await ExerciseService.update(exercise);
-    onExerciseChanged();
+    if (name == thisExercise.name && notes == thisExercise.notes) return;
+    thisExercise.name = name;
+    thisExercise.notes = notes;
+    await ExerciseService.update(thisExercise);
+    reloadExercise();
     setIsEditMode(false);
   }
 
   const removeExerciseFromWorkout = async () => {
     if (!workoutId) return;
-    await WorkoutService.removeExercise(workoutId, exercise.id);
+    await WorkoutService.removeExercise(workoutId, thisExercise.id);
     onExerciseChanged();
   }
 
   const deleteExercise = async () => {
-    if (confirm(`Are you sure you want to delete exercise ${exercise.name}?`)) {
-      await ExerciseService.delete(exercise.id);
+    if (confirm(`Are you sure you want to delete exercise ${thisExercise.name}?`)) {
+      await ExerciseService.delete(thisExercise.id);
       onExerciseChanged();
     }
+  }
+
+  const reloadExercise = async () => {
+    const response = await ExerciseService.get(thisExercise.id);
+    exercise = response;
+    setThisExercise(response);
+    setName(response.name);
+    setNotes(response.notes);
   }
 
   return (
       <>
         {!isEditMode &&
           <div className="vertical-spacing box exercise">
-            <h4>Exercise: {exercise.name}</h4>
-            <div className="indent"><strong>Notes: </strong>{exercise.notes}</div>
+            <h4>Exercise: {thisExercise.name}</h4>
+            <div className="indent"><strong>Notes: </strong>{thisExercise.notes}</div>
             <div className="indent"><em>Last edited: </em>
-              {new Date(exercise.lastEditedDate).toLocaleString()}</div>
+              {new Date(thisExercise.lastEditedDate).toLocaleString([], {
+                  year: 'numeric', month: 'numeric', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+              })}</div>
             {!isDetailVisible && 
               <div>
-                <div className="indent"><strong>Number of sets: </strong>{exercise.exerciseSets.length}</div>
+                <div className="indent"><strong>Number of sets: </strong>{thisExercise.exerciseSets.length}</div>
                 <button onClick={() => setIsDetailVisible(true)}>Show detail</button>
               </div>}
             {isDetailVisible && 
               <div>
                 <div className="indent">
-                  {exercise.exerciseSets.map((set) => (
+                  {thisExercise.exerciseSets.map((set) => (
                     <div className="indent">
-                      <ExerciseSet set={set} exerciseId={exercise.id} onChange={handleChildChanged} />
+                      <ExerciseSet set={set} exerciseId={thisExercise.id} onChange={handleChildChanged} />
                     </div>
                   ))}
                 </div>
                 <div><button onClick={() => setIsDetailVisible(false)}>Hide detail</button></div>
                 {isCreateSetVisible && 
-                  <CreateSet exerciseId={exercise.id} onCreate={handleChildChanged} onReturn={() => setIsCreateSetVisible(false)} />}
+                  <CreateSet exerciseId={thisExercise.id} onCreate={handleChildChanged} onReturn={() => setIsCreateSetVisible(false)} />}
                 {!isCreateSetVisible &&
                   <div><button onClick={() => setIsCreateSetVisible(true)}>Add set</button></div>}
               </div>}

@@ -83,10 +83,15 @@ function DoWorkout() {
             {originalWorkout && <div>
                 <div className="indent"><strong>Notes: </strong>{originalWorkout.notes}</div>
                 <div className="indent"><em>Last edited: </em>
-                {new Date(originalWorkout?.lastEditedDate).toLocaleString()}</div>
+                {new Date(originalWorkout?.lastEditedDate).toLocaleString([], {
+                  year: 'numeric', month: 'numeric', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+                })}</div>
                 {originalWorkout.lastCompletedDate && <div className="indent"><em>Last completed: </em>
-                {new Date(originalWorkout.lastCompletedDate).toLocaleString()}</div>}
-                
+                {new Date(originalWorkout.lastCompletedDate).toLocaleString([], {
+                  year: 'numeric', month: 'numeric', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+                })}</div>}
                 <div>
                     {formData?.completedExercises.map((exercise, eIndex) => (
                         <div key={`exercise${eIndex}`} className="indent">

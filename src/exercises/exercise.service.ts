@@ -14,6 +14,16 @@ class ExerciseService {
         throw err;
     }
   }
+
+  async get(id:string) {
+    try {
+      const res = await axios.get(`${this.baseUrl}/${id}`);
+      return res.data;
+    } catch (err) {
+        console.error('error', err);
+        throw err;
+    }
+  }
   
   async update(exercise:ExerciseResponse): Promise<ExerciseResponse> {
     const request: UpdateExerciseRequest = { name: exercise.name, notes: exercise.notes };

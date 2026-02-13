@@ -51,9 +51,15 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
             <div className="two-column-flex-container"><h3>Workout: {workout.name}</h3><a href={`/do-workout/${workout.id}`}>Do workout!</a></div>
             <div className="indent"><strong>Notes: </strong>{workout.notes}</div>
             <div className="indent"><em>Last edited: </em>
-              {new Date(workout.lastEditedDate).toLocaleString()}</div>
+              {new Date(workout.lastEditedDate).toLocaleString([], {
+                  year: 'numeric', month: 'numeric', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+              })}</div>
             {workout.lastCompletedDate && <div className="indent"><em>Last completed: </em>
-              {new Date(workout.lastCompletedDate).toLocaleString()}</div>}
+              {new Date(workout.lastCompletedDate).toLocaleString([], {
+                  year: 'numeric', month: 'numeric', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+              })}</div>}
             {!isDetailVisible && 
               <div>
                 <div className="indent"><strong>Number of exercises: </strong>{workout.exercises.length}</div>

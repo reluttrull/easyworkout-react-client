@@ -33,9 +33,15 @@ function CompletedWorkout({ completedWorkout, onChange }: CompletedWorkoutProps)
             <div className="indent"><strong>Notes: </strong>
                 {completedWorkout.completedNotes ?? completedWorkout.originalNotes}</div>
             <div className="indent"><em>Last edited: </em>
-              {new Date(completedWorkout.lastEditedDate).toLocaleString()}</div>
+              {new Date(completedWorkout.lastEditedDate).toLocaleString([], {
+                  year: 'numeric', month: 'numeric', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+              })}</div>
             <div className="indent"><em>Workout completed on: </em>
-              {new Date(completedWorkout.completedDate).toLocaleString()}</div>
+              {new Date(completedWorkout.completedDate).toLocaleString([], {
+                  year: 'numeric', month: 'numeric', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+              })}</div>
             <div className="indent"><strong>Number of exercises completed: </strong>
               {completedWorkout.completedExercises.length}</div>
             <div className="indent">

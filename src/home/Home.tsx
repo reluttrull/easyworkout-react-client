@@ -27,7 +27,10 @@ function Home() {
         <>
           {user && <h2>Welcome, {user.firstName}</h2>}
             {isLoading && <div>Loading...</div>}
-            {lastCompletedDate && user && lastCompletedDate >= user?.joinedDate && <div>Your last workout was on {new Date(lastCompletedDate).toLocaleString()}</div>}
+            {lastCompletedDate && user && lastCompletedDate >= user?.joinedDate && <div>Your last workout was on {new Date(lastCompletedDate).toLocaleString([], {
+                  year: 'numeric', month: 'numeric', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+            })}</div>}
         </>
   )
 }

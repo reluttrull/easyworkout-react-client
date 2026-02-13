@@ -47,8 +47,14 @@ function Account() {
                 <div><strong>Last name: </strong>{user?.lastName}</div>
                 {user?.email && <div><strong>Email address: </strong>{user.email}</div>}
                 {user?.userName && <div><strong>Username: </strong>{user.userName}</div>}
-                <div><strong>Member since: </strong>{user ? new Date(user?.joinedDate).toLocaleString() : ''}</div>
-                <div><strong>Last edited: </strong>{user ? new Date(user?.lastEditedDate).toLocaleString() : ''}</div>
+                <div><strong>Member since: </strong>{user ? new Date(user?.joinedDate).toLocaleString([], {
+                  year: 'numeric', month: 'numeric', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+                }) : ''}</div>
+                <div><strong>Last edited: </strong>{user ? new Date(user?.lastEditedDate).toLocaleString([], {
+                  year: 'numeric', month: 'numeric', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+                }) : ''}</div>
               </div>}
             {isEditMode && 
               <div>
