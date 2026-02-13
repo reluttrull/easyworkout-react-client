@@ -25,7 +25,7 @@ function Home() {
 
   return (
         <>
-          <h2>Welcome, {user?.firstName}</h2>
+          {user && <h2>Welcome, {user.firstName}</h2>}
             {isLoading && <div>Loading...</div>}
             {lastCompletedDate && user && lastCompletedDate >= user?.joinedDate && <div>Your last workout was on {new Date(lastCompletedDate).toLocaleString()}</div>}
         </>

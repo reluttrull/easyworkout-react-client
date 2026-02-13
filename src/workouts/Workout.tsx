@@ -70,6 +70,11 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
               </div>}
             <div><button onClick={() => setIsEditMode(true)}>Edit</button></div>
             <div><button onClick={deleteWorkout}>Delete</button></div>
+            {!isAddExerciseMode && <div><button onClick={() => setIsAddExerciseMode(true)}>Add exercise</button></div>}
+            {isAddExerciseMode && 
+              <div className="indent">
+                <AddExerciseToWorkout workoutId={workout.id} onUpdate={handleChildChanged} onClose={() => setIsAddExerciseMode(false)} />
+              </div>}
           </div>}
         {isEditMode && 
           <div>
@@ -80,11 +85,6 @@ function Workout({ workout, onWorkoutChanged }: WorkoutProps) {
               <div><button type="submit">Update</button></div>
             </form>
             <button type="button" onClick={() => setIsEditMode(false)}>Cancel</button>
-          </div>}
-        {!isAddExerciseMode && <div><button onClick={() => setIsAddExerciseMode(true)}>Add exercise</button></div>}
-        {isAddExerciseMode && 
-          <div className="indent">
-            <AddExerciseToWorkout workoutId={workout.id} onUpdate={handleChildChanged} onClose={() => setIsAddExerciseMode(false)} />
           </div>}
       </>
   )
